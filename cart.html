@@ -5,133 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <style>
-        body {
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
+        /* Simple styles for the cart */
+        #cart {
+            border: 1px solid #ccc;
             padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #00ffff; /* Neon blue */
+            margin: 20px 0;
         }
-        th {
-            background-color: #1a1a1a;
-        }
-        tr:hover {
-            background-color: #2a2a2a;
-        }
-        .total {
-            font-weight: bold;
-            font-size: 1.5em;
-            margin-top: 20px;
-        }
-        button {
-            background-color: #00ffff; /* Neon blue */
-            border: none;
-            color: black;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 1em;
-        }
-        button:hover {
-            background-color: #0f4c75;
-        }
-        .remove {
-            background-color: red;
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Your Shopping Cart</h1>
-    </header>
 
-    <main>
-        <table id="cartTable">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Product 1</td>
-                    <td class="price">$29.99</td>
-                    <td class="quantity">1</td>
-                    <td class="subtotal">$29.99</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>Product 2</td>
-                    <td class="price">$49.99</td>
-                    <td class="quantity">1</td>
-                    <td class="subtotal">$49.99</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>Product 3</td>
-                    <td class="price">$19.99</td>
-                    <td class="quantity">2</td>
-                    <td class="subtotal">$39.98</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-            </tbody>
-        </table>
+<h1>Online Store</h1>
+<div id="products">
+    <div>
+        <span>Product 1</span>
+        <button onclick="addToCart('Product 1', 10)">Add to Cart</button>
+    </div>
+    <div>
+        <span>Product 2</span>
+        <button onclick="addToCart('Product 2', 20)">Add to Cart</button>
+    </div>
+    <div>
+        <span>Product 3</span>
+        <button onclick="addToCart('Product 3', 30)">Add to Cart</button>
+    </div>
+</div>
 
-        <div class="total">
-            Total: <span id="totalAmount">$119.96</span>
-        </div>
-        <button id="checkoutButton">Proceed to Checkout</button>
-    </main>
+<h2>Your Cart</h2>
+<div id="cart"></div>
+<button onclick="clearCart()">Clear Cart</button>
 
-    <script>
-        // Function to update the total amount
-        function updateTotal() {
-            const rows = document.querySelectorAll('#cartTable tbody tr');
-            let total = 0;
-            rows.forEach(row => {
-                const price = parseFloat(row.querySelector('.price').textContent.replace('$', ''));
-                const quantity = parseInt(row.querySelector('.quantity').textContent);
-                const subtotal = price * quantity;
-                row.querySelector('.subtotal').textContent = `$${subtotal.toFixed(2)}`;
-                total += subtotal;
-            });
-            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+<script>
+    let cart = [];
+
+    function addToCart(product, price) {
+        cart.push({ product, price });
+        renderCart();
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    function clearCart() {
+        cart = [];
+        renderCart();
+    }
+
+    function renderCart() {
+        const cartDiv = document.getElementById('cart');
+        cartDiv.innerHTML = ''; // Clear previous cart content
+
+        if (cart.length === 0) {
+            cartDiv.innerHTML = '<p>Your cart is empty.</p>';
+            return;
         }
 
-        // Event listener for remove buttons
-        document.querySelectorAll('.remove').forEach(button => {
-            button.addEventListener('click', function() {
-                const row = this.closest('tr');
-                row.parentNode.removeChild(row); // Remove the row from the table
-                updateTotal(); // Update the total amount
-            });
+        cart.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.classList.add('cart-item');
+            div.innerHTML = `
+                ${item.product} - $${item.price}
+                <button onclick="removeFromCart(${index})">Remove</button>
+            `;
+            cartDiv.appendChild(div);
         });
+    }
+</script>
 
-        // Initial total calculation
-        updateTotal();
-    </script>
 </body>
 </html>
