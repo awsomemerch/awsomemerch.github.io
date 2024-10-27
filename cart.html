@@ -23,7 +23,7 @@
         th, td {
             padding: 10px;
             text-align: left;
-            border-bottom: 1px solid neonblue;
+            border-bottom: 1px solid #00ffff; /* Neon blue */
         }
         th {
             background-color: #1a1a1a;
@@ -37,13 +37,14 @@
             margin-top: 20px;
         }
         button {
-            background-color: neonblue;
+            background-color: #00ffff; /* Neon blue */
             border: none;
-            color: white;
+            color: black;
             padding: 10px 20px;
             cursor: pointer;
             border-radius: 5px;
             margin-top: 20px;
+            font-size: 1em;
         }
         button:hover {
             background-color: #0f4c75;
@@ -64,7 +65,7 @@
     </header>
 
     <main>
-        <table>
+        <table id="cartTable">
             <thead>
                 <tr>
                     <th>Product</th>
@@ -77,33 +78,60 @@
             <tbody>
                 <tr>
                     <td>Product 1</td>
-                    <td>$29.99</td>
-                    <td>1</td>
-                    <td>$29.99</td>
+                    <td class="price">$29.99</td>
+                    <td class="quantity">1</td>
+                    <td class="subtotal">$29.99</td>
                     <td><button class="remove">Remove</button></td>
                 </tr>
                 <tr>
                     <td>Product 2</td>
-                    <td>$49.99</td>
-                    <td>1</td>
-                    <td>$49.99</td>
+                    <td class="price">$49.99</td>
+                    <td class="quantity">1</td>
+                    <td class="subtotal">$49.99</td>
                     <td><button class="remove">Remove</button></td>
                 </tr>
                 <tr>
                     <td>Product 3</td>
-                    <td>$19.99</td>
-                    <td>2</td>
-                    <td>$39.98</td>
+                    <td class="price">$19.99</td>
+                    <td class="quantity">2</td>
+                    <td class="subtotal">$39.98</td>
                     <td><button class="remove">Remove</button></td>
                 </tr>
             </tbody>
         </table>
 
         <div class="total">
-            Total: $119.96
+            Total: <span id="totalAmount">$119.96</span>
         </div>
-        <button>Proceed to Checkout</button>
+        <button id="checkoutButton">Proceed to Checkout</button>
     </main>
+
+    <script>
+        // Function to update the total amount
+        function updateTotal() {
+            const rows = document.querySelectorAll('#cartTable tbody tr');
+            let total = 0;
+            rows.forEach(row => {
+                const price = parseFloat(row.querySelector('.price').textContent.replace('$', ''));
+                const quantity = parseInt(row.querySelector('.quantity').textContent);
+                const subtotal = price * quantity;
+                row.querySelector('.subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                total += subtotal;
+            });
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Event listener for remove buttons
+        document.querySelectorAll('.remove').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                row.parentNode.removeChild(row); // Remove the row from the table
+                updateTotal(); // Update the total amount
+            });
+        });
+
+        // Initial total calculation
+        updateTotal();
+    </script>
 </body>
 </html>
-
