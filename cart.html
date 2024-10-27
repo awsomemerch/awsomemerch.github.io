@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid neonblue;
+        }
+        th {
+            background-color: #1a1a1a;
+        }
+        tr:hover {
+            background-color: #2a2a2a;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        button {
+            background-color: neonblue;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0f4c75;
+        }
+        .remove {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Shopping Cart</h1>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Product 1</td>
+                    <td>$29.99</td>
+                    <td>1</td>
+                    <td>$29.99</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Product 2</td>
+                    <td>$49.99</td>
+                    <td>1</td>
+                    <td>$49.99</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Product 3</td>
+                    <td>$19.99</td>
+                    <td>2</td>
+                    <td>$39.98</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="total">
+            Total: $119.96
+        </div>
+        <button>Proceed to Checkout</button>
+    </main>
+</body>
+</html>
 
