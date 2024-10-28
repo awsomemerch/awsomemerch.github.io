@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#products, #cart {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.product, .cart-item {
+    margin: 10px 0;
+}
